@@ -1,1 +1,1 @@
-The code for my assignments will be posted here, allowing you to easily download the assignment code I made to test, or you can enter it and copy/paste it, and you can read it before you download it as well. 
+The code for my assignments will be posted here and named appropriately, allowing you to easily download the assignment code I made to test, or you can enter the assignment in github and copy/paste the code into your IDE. You can also read the code before you download it as well. 
