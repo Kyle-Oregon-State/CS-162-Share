@@ -1,0 +1,93 @@
+# Author: Kyle Parker
+# GitHub username: Kyle-Oregon-State
+# Date: 10/14/2025
+# Description: Defines 3 classes. First a class called "Movie" with four data members, title, genre, director and year.
+# Includes init method as well as get methods for the data members.
+# Secondly a class called "StreamingService" with two data members, name and catalog. Catalog is a dictionary of movies
+# with titles as keys and Movie objects as corresponding values. Includes methods for init, get methods, a method called
+# "add_movie" that takes a Movie object as an argument and adds it to the catalog, and a method "delete_movie" which does
+# the opposite.
+# Lastly a class "StreamingGuide" that has one data member, a list of StreamingService objects. Includes an init method
+# as well as an "add_streaming_service" method that takes a StreamingService object to the list, a "delete_streaming_service"
+# method that does the opposite, and a "who_streams_this_movie" method that takes a movie title as a parameter and
+# returns a dictionary of Streaming Services have that movie in their catalog, returning None if it is in no catalog.
+
+class Movie:
+    """ a class whose objects represent a movie, with data members for title, genre, director and year released """
+    def __init__(self, title, genre, director, year):
+        """ creates a Movie object """
+        self._title = title
+        self._genre = genre
+        self._director = director
+        self._year = year
+
+    def get_title(self):
+        """ returns the Movie object's title """
+        return self._title
+
+    def get_genre(self):
+        """ returns the Movie object's genre """
+        return self._genre
+
+    def get_director(self):
+        """ returns the Movie object's director """
+        return self._director
+
+    def get_year(self):
+        """ returns the Movie object's year of release """
+        return self._year
+
+class StreamingService:
+    """ a class whose objects represent a streaming service, with data members for name of service and catalog of movies"""
+    def __init__(self, name):
+        """ creates a StreamingService object """
+        self._name = name
+        self._catalog = {}
+
+    def get_name(self):
+        """ returns the name of the StreamingService object """
+        return self._name
+
+    def get_catalog(self):
+        """ returns the catalog of the StreamingService object """
+        return self._catalog
+
+    def add_movie(self, movie):
+        """ adds a Movie object to the Streaming Service's catalog """
+        self._catalog[movie.get_title()] = movie
+
+    def delete_movie(self, title):
+        """ deletes a Movie object from the Streaming Service's catalog """
+        self._catalog.pop(title, None)
+
+class StreamingGuide:
+    """ A class whose objects represent a streaming guide that helps find what movies are in which streaming catalog
+    contains one data member, a list of StreamingService objects """
+    def __init__(self):
+        """ creates a StreamingGuide object """
+        self._streaming_services = []
+
+    def add_streaming_service(self, streaming_service):
+        """ adds a StreamingService object to the list of Streaming Services in the Streaming Guide"""
+        self._streaming_services.append(streaming_service)
+
+    def delete_streaming_service(self, streaming_service):
+        """ deletes a StreamingService object from the list of Streaming Services in the Streaming Guide"""
+        for service in self._streaming_services:
+            if streaming_service == service.get_name():
+                self._streaming_services.remove(service)
+
+    def who_streams_this_movie(self, title):
+        """ returns either a dictionary containing the movies title, release year and services that have the movie in the
+        catalog, or returns None if the movie is not in any catalog of the StreamingServices within the Streaming Guide"""
+        containing_services = []
+        who_streams = {}
+        for service in self._streaming_services:
+            if title in service.get_catalog():
+                containing_services.append(service.get_name())
+                who_streams["title"] = service.get_catalog()[title].get_title()
+                who_streams["year"] = service.get_catalog()[title].get_year()
+        who_streams["services"] = containing_services
+        if not containing_services:
+            return None
+        return who_streams
